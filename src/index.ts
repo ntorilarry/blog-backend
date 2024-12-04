@@ -3,7 +3,6 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 const express = require("express");
-const body = require("body-parser");
 dotenv.config();
 
 async function start() {
@@ -23,15 +22,12 @@ async function start() {
 
     // body parser
 
-    app.use(
-      body.json({
-        limit: "500kb",
-      })
-    );
+    app.use(express.json());
 
     // Routes
 
     app.use("/auth", require("./routes/auth"));
+    app.use("/users", require("./routes/users"));
 
     // Start server
 
