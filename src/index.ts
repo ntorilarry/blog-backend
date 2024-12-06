@@ -3,6 +3,8 @@ import cors from "cors";
 import dotenv from "dotenv";
 
 const express = require("express");
+const swaggerUi = require("swagger-ui-express");
+const swaggerSpec = require("./utils/swagger");
 dotenv.config();
 
 async function start() {
@@ -21,11 +23,10 @@ async function start() {
     app.db = mongo.db();
 
     // body parser
-
     app.use(express.json());
 
     // Routes
-
+    app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.use("/auth", require("./routes/auth"));
     app.use("/users", require("./routes/users"));
 

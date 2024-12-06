@@ -41,7 +41,7 @@ export async function logIn(req: any, res: any) {
         name: user.name,
       },
       process.env.JWT_SECRET || "your_jwt_secret", // Use environment variable for secret
-      { expiresIn: "1h" } // Token expires in 1 hour
+      { expiresIn: "24h" } // Token expires in 1 hour
     );
 
     // Return response with token and user details (excluding the password)
