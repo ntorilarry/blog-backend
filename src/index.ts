@@ -30,6 +30,7 @@ async function start() {
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
     app.use(`${apiV1}/auth`, require("./routes/auth"));
     app.use(`${apiV1}/users`, require("./routes/users"));
+    app.use(`${apiV1}/categories`, require("./routes/categories"));
 
     // Start server
 

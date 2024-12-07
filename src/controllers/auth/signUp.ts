@@ -1,5 +1,5 @@
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid"; // Adjust the path to your sendEmail module
+import { v4 as uuidv4 } from "uuid";
 import { sendEmail } from "../../utils/sendEmail";
 
 export async function signUp(req: any, res: any) {
@@ -58,6 +58,7 @@ export async function signUp(req: any, res: any) {
 
     const id = uuidv4();
     const createdAt = new Date();
+    const modifiedAt = createdAt;
 
     // Generate email verification token
     const emailToken = uuidv4();
@@ -70,6 +71,7 @@ export async function signUp(req: any, res: any) {
       phone,
       password: hashedPassword,
       createdAt,
+      modifiedAt,
       emailVerified: false,
       emailToken,
     });
@@ -104,6 +106,7 @@ export async function signUp(req: any, res: any) {
         email,
         phone,
         createdAt,
+        modifiedAt
       },
     });
   } catch (error: unknown) {

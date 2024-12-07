@@ -1,4 +1,5 @@
 const swaggerJSDoc = require("swagger-jsdoc");
+const path = require("path");
 
 const swaggerDefinition = {
   openapi: "3.0.0",
@@ -16,16 +17,13 @@ const swaggerDefinition = {
       url: "http://localhost:8000", // Replace with your base URL
       description: "Development server",
     },
-    {
-      url: "http://localhost:8000", // Replace with your base URL
-      description: "Live server",
-    },
+   
   ],
 };
 
 const options = {
   swaggerDefinition,
-  apis: ["./build/routes/*.js"],
+  apis: ["./src/route/*.ts"],
 };
 
 const swaggerSpec = swaggerJSDoc(options);
