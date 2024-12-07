@@ -29,6 +29,7 @@ export async function getUsers(req: any, res: any) {
       .collection("users")
       .find()
       .skip(skip)
+      .sort({ createdAt: -1 })
       .limit(pageSize)
       .toArray();
 

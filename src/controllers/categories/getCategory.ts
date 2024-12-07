@@ -28,6 +28,7 @@ export async function getAllCategories(req: any, res: any) {
     const categories = await db
       .collection("categories")
       .find()
+      .sort({ createdAt: -1 })
       .skip(skip)
       .limit(pageSize)
       .toArray();

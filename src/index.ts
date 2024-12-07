@@ -31,6 +31,7 @@ async function start() {
     app.use(`${apiV1}/auth`, require("./routes/auth"));
     app.use(`${apiV1}/users`, require("./routes/users"));
     app.use(`${apiV1}/categories`, require("./routes/categories"));
+    app.use(`${apiV1}/blog-post`, require("./routes/blogPost"));
 
     // Start server
 
