@@ -1,4 +1,4 @@
-import { getUsers, getUsersById } from "../controllers/getUsers";
+import { getUsers, getUsersById } from "../controllers/users/getUsers";
 
 const express = require("express");
 

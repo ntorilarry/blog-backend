@@ -35,7 +35,7 @@ export async function requestPasswordReset(req: any, res: any) {
       );
 
     // Send reset email
-    const resetLink = `${process.env.CLIENT_URL}/reset-password?token=${resetToken}&email=${user.email}`;
+    const resetLink = `${process.env.FRONTEND_URL}/reset-password?token=${resetToken}&email=${user.email}`;
     await sendEmail(
       user.email,
       "Password Reset",

@@ -1,6 +1,7 @@
 import { MongoClient } from "mongodb";
 import cors from "cors";
 import dotenv from "dotenv";
+import { apiV1 } from "./utils/constant";
 
 const express = require("express");
 const swaggerUi = require("swagger-ui-express");
@@ -27,8 +28,8 @@ async function start() {
 
     // Routes
     app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
-    app.use("/auth", require("./routes/auth"));
-    app.use("/users", require("./routes/users"));
+    app.use(`${apiV1}/auth`, require("./routes/auth"));
+    app.use(`${apiV1}/users`, require("./routes/users"));
 
     // Start server
 

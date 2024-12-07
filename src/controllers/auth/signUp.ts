@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
-import { v4 as uuidv4 } from "uuid";
+import { v4 as uuidv4 } from "uuid"; // Adjust the path to your sendEmail module
+import { sendEmail } from "../../utils/sendEmail";
 
 export async function signUp(req: any, res: any) {
   try {
@@ -10,17 +11,14 @@ export async function signUp(req: any, res: any) {
     if (!name) {
       return res.status(400).json({ code: "01", message: "Name is required" });
     }
-
     if (!email) {
       return res.status(400).json({ code: "01", message: "Email is required" });
     }
-
     if (!password) {
       return res
         .status(400)
         .json({ code: "01", message: "Password is required" });
     }
-
     if (!phone) {
       return res.status(400).json({ code: "01", message: "Phone is required" });
     }
@@ -61,6 +59,9 @@ export async function signUp(req: any, res: any) {
     const id = uuidv4();
     const createdAt = new Date();
 
+    // Generate email verification token
+    const emailToken = uuidv4();
+
     // Insert new customer
     const result = await db.collection("users").insertOne({
       id,
@@ -69,23 +70,42 @@ export async function signUp(req: any, res: any) {
       phone,
       password: hashedPassword,
       createdAt,
+      emailVerified: false,
+      emailToken,
     });
 
-    if (result.acknowledged) {
-      res.status(200).json({
-        code: "00",
-        message: "Registration successful",
-        data: {
-          id,
-          name,
-          email,
-          phone,
-          createdAt,
-        },
-      });
-    } else {
+    if (!result.acknowledged) {
       throw new Error("Registration failed");
     }
+
+    // Send verification email using the helper function
+    const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${emailToken}`;
+    const emailSubject = "Verify Your Email";
+    const emailBody = `
+  <html>
+    <body style="font-family: Arial, sans-serif; line-height: 1.6;">
+      <h1>Welcome, ${name}!</h1>
+      <p>Thank you for signing up. Please verify your email by clicking the link below:</p>
+      <a href="${verificationLink}" target="_blank" style="color: #007BFF; text-decoration: none;">Verify Email</a>
+      <p>If you did not request this email, you can safely ignore it.</p>
+    </body>
+  </html>
+`;
+
+    await sendEmail(email, emailSubject, emailBody);
+
+    res.status(200).json({
+      code: "00",
+      message:
+        "Registration successful. Please check your email for verification.",
+      data: {
+        id,
+        name,
+        email,
+        phone,
+        createdAt,
+      },
+    });
   } catch (error: unknown) {
     const errorMessage =
       error instanceof Error ? error.message : "An unknown error occurred";
