@@ -1,6 +1,6 @@
 import bcrypt from "bcrypt";
 import { v4 as uuidv4 } from "uuid";
-import { sendEmail } from "../../utils/sendEmail";
+import { sendEmail } from "../../helpers/sendEmail";
 
 export async function signUp(req: any, res: any) {
   try {
@@ -106,7 +106,7 @@ export async function signUp(req: any, res: any) {
         email,
         phone,
         createdAt,
-        modifiedAt
+        modifiedAt,
       },
     });
   } catch (error: unknown) {

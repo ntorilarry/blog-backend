@@ -1,5 +1,5 @@
 import crypto from "crypto";
-import { sendEmail } from "../../utils/sendEmail";
+import { sendEmail } from "../../helpers/sendEmail";
 
 export async function requestPasswordReset(req: any, res: any) {
   try {

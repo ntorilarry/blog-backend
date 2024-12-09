@@ -14,11 +14,27 @@ const router = express.Router();
  *     summary: Get all categories
  *     tags:
  *       - Categories
+ *     parameters:
+ *       - in: query
+ *         name: page
+ *         required: false
+ *         description: Page number for pagination
+ *         schema:
+ *           type: integer
+ *           default: 1
+ *       - in: query
+ *         name: size
+ *         required: false
+ *         description: Number of items per page
+ *         schema:
+ *           type: integer
+ *           default: 50
  *     responses:
  *       '200':
  *         description: List of all categories
  */
 router.get("/", getAllCategories);
+
 
 /**
  * @swagger

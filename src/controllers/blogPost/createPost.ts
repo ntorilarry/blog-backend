@@ -1,32 +1,10 @@
 import { v4 as uuidv4 } from "uuid";
-import cloudinary from "cloudinary";
 import multer from "multer";
-
-// Configure Cloudinary
-cloudinary.v2.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+import { uploadImageToCloudinary } from "../../helpers/imageCloudinary";
 
 // Configure Multer
 const upload = multer({ storage: multer.memoryStorage() });
 
-// Helper function to upload to Cloudinary
-const uploadImageToCloudinary = (buffer: Buffer): Promise<string> => {
-  return new Promise((resolve, reject) => {
-    const stream = cloudinary.v2.uploader.upload_stream(
-      { folder: "blog_posts" },
-      (error, result) => {
-        if (error) return reject(error);
-        if (!result || !result.secure_url)
-          return reject(new Error("Upload failed"));
-        resolve(result.secure_url);
-      }
-    );
-    stream.end(buffer);
-  });
-};
 
 export const createPost = [
   upload.single("image"), // Middleware to handle image upload
@@ -114,7 +92,6 @@ export const createPost = [
           id: category.id,
           name: category.name,
         },
-        ratings,
         comments,
         createdAt,
         modifiedAt,
