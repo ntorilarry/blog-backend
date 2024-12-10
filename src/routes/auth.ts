@@ -3,6 +3,7 @@ import { logIn } from "../controllers/auth/logIn";
 import { signUp } from "../controllers/auth/signUp";
 import { requestPasswordReset } from "../controllers/auth/requestPasswordReset";
 import { resetPassword } from "../controllers/auth/resetPassword";
+import { verifyEmail } from "../controllers/auth/verifyEmail";
 
 const router = express.Router();
 
@@ -138,5 +139,26 @@ router.post("/request-password-reset", requestPasswordReset);
  *         description: Internal server error.
  */
 router.post("/reset-password", resetPassword);
+
+/**
+ * @swagger
+ * /verify-email:
+ *   get:
+ *     summary: Verify email
+ *     tags:
+ *       - Authentication
+ *     parameters:
+ *       - in: query
+ *         name: token
+ *         required: true
+ *         description: pass the email token here
+ *         schema:
+ *           type: string
+ *           example: "email token"
+ *     responses:
+ *       '200':
+ *         description: Verify email
+ */
+router.get("/verify-email", verifyEmail);
 
 module.exports = router;

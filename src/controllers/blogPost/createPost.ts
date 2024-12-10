@@ -5,7 +5,6 @@ import { uploadImageToCloudinary } from "../../helpers/imageCloudinary";
 // Configure Multer
 const upload = multer({ storage: multer.memoryStorage() });
 
-
 export const createPost = [
   upload.single("image"), // Middleware to handle image upload
   async (req: any, res: any) => {
@@ -75,8 +74,15 @@ export const createPost = [
       const id = uuidv4();
       const createdAt = new Date();
       const modifiedAt = createdAt;
-      const ratings = null;
-      const comments = null;
+
+      // Explicitly typed comments array
+      const comments: Array<{
+        id: string;
+        content: string;
+        rating: number;
+        author: { id: string; name: string };
+        createdAt: Date;
+      }> = [];
 
       const result = await db.collection("blogPost").insertOne({
         id,
@@ -112,6 +118,7 @@ export const createPost = [
           tags: parsedTags,
           author: { id: user.id, name: user.name },
           category: { id: category.id, name: category.name },
+          comments,
           createdAt,
           modifiedAt,
         },

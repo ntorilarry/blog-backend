@@ -32,6 +32,7 @@ async function start() {
     app.use(`${apiV1}/users`, require("./routes/users"));
     app.use(`${apiV1}/categories`, require("./routes/categories"));
     app.use(`${apiV1}/blog-post`, require("./routes/blogPost"));
+    app.use(`${apiV1}/comment`, require("./routes/comments"));
 
     // Start server
 

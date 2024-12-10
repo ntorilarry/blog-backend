@@ -1,7 +1,7 @@
-import { createPost } from "../controllers/blogPost/createPost";
-import { deletePost } from "../controllers/blogPost/deletePost";
-import { getPostById, getPosts } from "../controllers/blogPost/getPost";
-import { updatePost } from "../controllers/blogPost/updatePost";
+import { createComment } from "../controllers/comments/createComment";
+import { deleteComment } from "../controllers/comments/deleteComment";
+import { getComment, getCommentById } from "../controllers/comments/getComment";
+import { updateComment } from "../controllers/comments/updateComment";
 
 const express = require("express");
 
@@ -9,11 +9,11 @@ const router = express.Router();
 
 /**
  * @swagger
- * /blog-post:
+ * /comment:
  *   post:
- *     summary: Create a post
+ *     summary: Create a comment
  *     tags:
- *       - Blog Post
+ *       - Comment
  *     requestBody:
  *       required: true
  *       content:
@@ -21,38 +21,32 @@ const router = express.Router();
  *           schema:
  *             type: object
  *             properties:
- *               title:
- *                 type: string
  *               content:
  *                 type: string
  *               authorId:
  *                 type: string
- *               categoryId:
+ *               postId:
  *                 type: string
- *               image:
- *                 type: string
- *               tags:
- *                 type: array
- *                 items:
- *                   type: string
+ *               rating:
+ *                 type: number
  *     responses:
  *       '200':
- *         description: Post created successfully
+ *         description: Comment created successfully
  *       '400':
- *         description: Failed to create the post.
+ *         description: Failed to create the comment.
  *       '500':
  *         description: Internal server error.
  */
 
-router.post("/", createPost);
+router.post("/", createComment);
 
 /**
  * @swagger
- * /blog-post:
+ * /comment:
  *   get:
- *     summary: Get all blog Post
+ *     summary: Get all comment
  *     tags:
- *       - Blog Post
+ *       - Comment
  *     parameters:
  *       - in: query
  *         name: page
@@ -71,50 +65,50 @@ router.post("/", createPost);
  *       - in: query
  *         name: authorId
  *         required: false
- *         description: Filter posts by author ID
+ *         description: Filter comments by author ID
  *         schema:
  *           type: string
  *       - in: query
- *         name: categoryId
+ *         name: postId
  *         required: false
- *         description: Filter posts by category ID
+ *         description: Filter comments by post ID
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: List of all post
+ *         description: List of all comments
  */
-router.get("/", getPosts);
+router.get("/", getComment);
 
 /**
  * @swagger
- * /blog-post/{id}:
+ * /comment/{id}:
  *   get:
- *     summary: Get post by ID
+ *     summary: Get comment by ID
  *     tags:
- *       - Blog Post
+ *       - Comment
  *     parameters:
  *       - in: path
  *         name: id
  *         required: true
- *         description: post ID
+ *         description: comment ID
  *         schema:
  *           type: string
  *     responses:
  *       '200':
- *         description: post details
+ *         description: comment details
  *       '404':
- *         description: post not found
+ *         description: comment not found
  */
-router.get("/:id", getPostById);
+router.get("/:id", getCommentById);
 
 /**
  * @swagger
- * /blog-post:
+ * /comment:
  *   put:
- *     summary: Update post by ID
+ *     summary: Update comment by ID
  *     tags:
- *       - Blog Post
+ *       - Comment
  *     requestBody:
  *       required: true
  *       content:
@@ -124,38 +118,32 @@ router.get("/:id", getPostById);
  *             properties:
  *               id:
  *                 type: string
- *               title:
- *                 type: string
  *               content:
  *                 type: string
  *               authorId:
  *                 type: string
- *               categoryId:
+ *               postId:
  *                 type: string
- *               image:
- *                 type: string
- *               tags:
- *                 type: array
- *                 items:
- *                   type: string
+ *               rating:
+ *                 type: number
  *     responses:
  *       '200':
- *         description: Post updated successfully
+ *         description: Comment updated successfully
  *       '400':
- *         description: Failed to create the post.
+ *         description: Failed to create the comment.
  *       '500':
  *         description: Internal server error.
  */
 
-router.put("/", updatePost);
+router.put("/", updateComment);
 
 /**
  * @swagger
- * /blog-post/{id}:
+ * /comment/{id}:
  *   delete:
- *     summary: Delete post by ID
+ *     summary: Delete comment by ID
  *     tags:
- *       - Blog Post
+ *       - Comment
  *     parameters:
  *       - in: path
  *         name: id
@@ -164,8 +152,8 @@ router.put("/", updatePost);
  *           type: string
  *     responses:
  *       '200':
- *         description: Category deleted successfully
+ *         description: Comment deleted successfully
  */
-router.delete("/:id", deletePost);
+router.delete("/:id", deleteComment);
 
 module.exports = router;
