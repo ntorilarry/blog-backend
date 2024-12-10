@@ -5,7 +5,7 @@ import { sendEmail } from "../../helpers/sendEmail";
 export async function signUp(req: any, res: any) {
   try {
     const { db } = req.app as any;
-    const { name, email, phone, password } = req.body;
+    const { name, email, phone, password, confirmPassword } = req.body;
 
     // Validate required fields
     if (!name) {
@@ -19,6 +19,11 @@ export async function signUp(req: any, res: any) {
         .status(400)
         .json({ code: "01", message: "Password is required" });
     }
+    if (!confirmPassword) {
+      return res
+        .status(400)
+        .json({ code: "01", message: "Confirm Password is required" });
+    }
     if (!phone) {
       return res.status(400).json({ code: "01", message: "Phone is required" });
     }
@@ -28,6 +33,14 @@ export async function signUp(req: any, res: any) {
       return res.status(400).json({
         code: "01",
         message: "Phone number cannot be longer than 10 digits",
+      });
+    }
+
+    // Validate password and confirmPassword match
+    if (password !== confirmPassword) {
+      return res.status(400).json({
+        code: "01",
+        message: "Passwords do not match",
       });
     }
 

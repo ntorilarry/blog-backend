@@ -36,6 +36,10 @@ const router = express.Router();
  *                 type: string
  *                 format: password
  *                 example: Password123!
+ *               confirmPassword:
+ *                 type: string
+ *                 format: password
+ *                 example: Password123!
  *     responses:
  *       '200':
  *         description: User registered successfully.
@@ -127,6 +131,10 @@ router.post("/request-password-reset", requestPasswordReset);
  *                 type: string
  *                 example: "reset-token"
  *               newPassword:
+ *                 type: string
+ *                 format: password
+ *                 example: "NewPassword123!"
+ *               confirmPassword:
  *                 type: string
  *                 format: password
  *                 example: "NewPassword123!"

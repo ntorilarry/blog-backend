@@ -4,12 +4,28 @@ import crypto from "crypto";
 export async function resetPassword(req: any, res: any) {
   try {
     const { db } = req.app;
-    const { token, email, newPassword } = req.body;
+    const { token, email, newPassword, confirmPassword } = req.body;
 
-    if (!token || !email || !newPassword) {
+    if (!token || !email || !newPassword || !confirmPassword) {
       return res
         .status(400)
         .json({ code: "01", message: "All fields are required" });
+    }
+
+    if (newPassword !== confirmPassword) {
+      return res
+        .status(400)
+        .json({ code: "01", message: "Passwords do not match" });
+    }
+
+    const passwordRegex =
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+    if (!passwordRegex.test(newPassword)) {
+      return res.status(400).json({
+        code: "01",
+        message:
+          "Password must be at least 8 characters, include an uppercase letter, a number, and a special character.",
+      });
     }
 
     const user = await db
@@ -31,15 +47,13 @@ export async function resetPassword(req: any, res: any) {
 
     // Hash new password and update the user record
     const hashedPassword = await bcrypt.hash(newPassword, 10);
-    await db
-      .collection("users")
-      .updateOne(
-        { email: user.email },
-        {
-          $set: { password: hashedPassword },
-          $unset: { resetToken: "", resetTokenExpiry: "" },
-        }
-      );
+    await db.collection("users").updateOne(
+      { email: user.email },
+      {
+        $set: { password: hashedPassword },
+        $unset: { resetToken: "", resetTokenExpiry: "" },
+      }
+    );
 
     res.status(200).json({
       code: "00",
