@@ -33,6 +33,7 @@ async function start() {
     app.use(`${apiV1}/categories`, require("./routes/categories"));
     app.use(`${apiV1}/blog-post`, require("./routes/blogPost"));
     app.use(`${apiV1}/comment`, require("./routes/comments"));
+    app.use(`${apiV1}/like-post`, require("./routes/likes"));
 
     // Start server
     const port = process.env.PORT || 3000;

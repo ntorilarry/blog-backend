@@ -84,6 +84,13 @@ export const createPost = [
         createdAt: Date;
       }> = [];
 
+      const likes: Array<{
+        id: string;
+        author: { id: string; name: string };
+        action: boolean;
+        createdAt: Date;
+      }> = [];
+
       const result = await db.collection("blogPost").insertOne({
         id,
         title,
@@ -99,6 +106,7 @@ export const createPost = [
           name: category.name,
         },
         comments,
+        likes,
         createdAt,
         modifiedAt,
       });
@@ -119,6 +127,7 @@ export const createPost = [
           author: { id: user.id, name: user.name },
           category: { id: category.id, name: category.name },
           comments,
+          likes,
           createdAt,
           modifiedAt,
         },
