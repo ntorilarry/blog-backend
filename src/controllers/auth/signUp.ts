@@ -59,6 +59,7 @@ export async function signUp(req: any, res: any) {
     const id = uuidv4();
     const createdAt = new Date();
     const modifiedAt = createdAt;
+    const role = "USER";
 
     // Generate email verification token
     const emailToken = uuidv4();
@@ -72,6 +73,7 @@ export async function signUp(req: any, res: any) {
       password: hashedPassword,
       createdAt,
       modifiedAt,
+      role,
       emailVerified: false,
       emailToken,
     });
@@ -105,6 +107,7 @@ export async function signUp(req: any, res: any) {
         name,
         email,
         phone,
+        role,
         createdAt,
         modifiedAt,
       },
