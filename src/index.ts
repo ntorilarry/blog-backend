@@ -35,9 +35,9 @@ async function start() {
     app.use(`${apiV1}/comment`, require("./routes/comments"));
 
     // Start server
-
-    app.listen(process.env.PORT || 5000, () => {
-      console.log(`Server is running on port ${process.env.PORT}`);
+    const port = process.env.PORT || 3000;
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
     });
   } catch (error) {
     console.log(error);
