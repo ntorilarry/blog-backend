@@ -90,11 +90,11 @@ export const createPost = [
         content,
         image: imageUrl,
         tags: parsedTags,
-        authorId: {
+        author: {
           id: user.id,
           name: user.name,
         },
-        categoryId: {
+        category: {
           id: category.id,
           name: category.name,
         },

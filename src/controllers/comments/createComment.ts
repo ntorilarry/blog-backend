@@ -49,7 +49,7 @@ export async function createComment(req: any, res: any) {
       content,
       rating,
       postId,
-      authorId: {
+      author: {
         id: user.id,
         name: user.name,
       },

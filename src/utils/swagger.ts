@@ -14,12 +14,12 @@ const swaggerDefinition = {
   },
   servers: [
     {
-      url: "http://localhost:8000/api/v1", // Replace with your base URL
-      description: "Development server",
-    },
-    {
       url: "https://blog-backend-snkr.onrender.com/api/v1",
       description: "Live server",
+    },
+    {
+      url: "http://localhost:8080/api/v1", // Replace with your base URL
+      description: "Development server",
     },
   ],
 };
